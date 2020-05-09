@@ -11,3 +11,9 @@ def index():
 def blogs():
     title = 'all blogs'
     return render_template('blogs.html', title=title)
+
+@main.route('/trial')
+def trial():
+    title = 'all trials'
+    return render_template('trial.html', title=title)
+
