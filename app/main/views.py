@@ -7,8 +7,9 @@ from .. import db
 
 @main.route('/')
 def index():
+    blogs = Blog.query.all()
     title = 'welcome'
-    return render_template('index.html', title=title)
+    return render_template('index.html', title=title ,blogs=blogs)
 
 @main.route('/blogs' ,methods=["GET", "POST"])
 @login_required
