@@ -2,6 +2,7 @@ from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
 from . import login_manager
+from datetime import datetime
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -16,7 +17,9 @@ class User(UserMixin,db.Model):
     pass_secure = db.Column(db.String(255))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
-
+    blogs  = db.relationship('Blog', backref = 'user' , lazy = 'dynamic')
+    comments = db.relationship('Comment' , backref = 'user', lazy = 'dynamic')
+    
     @property
     def password(self):
         raise AttributeError('You cannot read the password attribute')
@@ -31,3 +34,28 @@ class User(UserMixin,db.Model):
     
     def __repr__(self):
          return f'User {self.username}'
+
+
+class Blog(db.Model):
+    __tablename__ = 'blogs'
+
+    id = db.Column(db.Integer ,primary_key = True)
+    title  = db.Column(db.String(255))
+    description = db.Column(db.String(255), index = True)
+    user_id = db.Column(db.Integer , db.ForeignKey('users.id'))
+    comments = db.relationship('Comment' , backref = 'blog', lazy = 'dynamic')
+
+
+    def __repr__(self):
+    return f'Blog {self.name}'
+
+
+class Comment(db.Model):
+    __tablename__= 'comments'
+    id = db.Column(db.Integer,primary_key = True)
+    description = db.Column(db.String(255))
+    blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+
+    
