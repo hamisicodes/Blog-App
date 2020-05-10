@@ -65,21 +65,22 @@ def update_profile(uname):
 
 @main.route('/comment/<int:id>', methods=["GET", "POST"])
 def comment(id):
-    comments = Comment.query.filter_by(pitch_id = id)
+    comments = Comment.query.filter_by(blog_id = id)
     blog = Blog.query.filter_by(id=id).first()
     form = CommentForm()
+    description = form.description.data
     if form.validate_on_submit():
           
-            comment = Comment(description =  , user = current_user , pitch = post)
+            comment = Comment(description = description , user = current_user , blog = blog)
 
             db.session.add(comment)
             db.session.commit()
 
-            return redirect(url_for('main.comment' id = id))
+            return redirect(url_for('main.comment', id = id))
 
             
 
    
     title = 'comments'
-    return render_template("comment.html" , blog=blog , comments = comments)
+    return render_template("comments.html" , blog=blog , comments = comments ,form = form)
 
