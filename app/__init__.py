@@ -19,6 +19,7 @@ def create_app(config_name):  # factory function
 
     db.init_app(app)
     login_manager.init_app(app)
+    bootstrap.init_app(app)
 
     # Registering the blueprints
     from .main import main as main_blueprint
