@@ -1,8 +1,8 @@
 from . import main
 from flask import render_template,redirect,url_for,request,flash
 from flask_login import login_required,current_user
-from .forms import UpdateProfile,BlogForm
-from ..models import User,Blog
+from .forms import UpdateProfile,BlogForm,CommentForm
+from ..models import User,Blog,Comment
 from .. import db
 
 @main.route('/')
@@ -62,4 +62,24 @@ def update_profile(uname):
         return redirect(url_for('.profile',uname=user.username))
 
     return render_template('update.html',form =form)
+
+@main.route('/comment/<int:id>', methods=["GET", "POST"])
+def comment(id):
+    comments = Comment.query.filter_by(pitch_id = id)
+    blog = Blog.query.filter_by(id=id).first()
+    form = CommentForm()
+    if form.validate_on_submit():
+          
+            comment = Comment(description =  , user = current_user , pitch = post)
+
+            db.session.add(comment)
+            db.session.commit()
+
+            return redirect(url_for('main.comment' id = id))
+
+            
+
+   
+    title = 'comments'
+    return render_template("comment.html" , blog=blog , comments = comments)
 
