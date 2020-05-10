@@ -1,8 +1,8 @@
 from . import main
 from flask import render_template,redirect,url_for,request,flash
-from flask_login import login_required
-from .forms import UpdateProfile
-from ..models import User
+from flask_login import login_required,current_user
+from .forms import UpdateProfile,BlogForm
+from ..models import User,Blog
 from .. import db
 
 @main.route('/')
@@ -10,11 +10,28 @@ def index():
     title = 'welcome'
     return render_template('index.html', title=title)
 
-@main.route('/blogs')
+@main.route('/blogs' ,methods=["GET", "POST"])
 @login_required
 def blogs():
+    form  = BlogForm()
+    title = form.title.data
+    blog = form.blog.data
+    blogs = Blog.query.all()
+
+    if form.validate_on_submit():
+        new_blog = Blog(title = title ,description = blog , user = current_user)
+
+        db.session.add(new_blog)
+        db.session.commit()
+
+        blogs = Blog.query.all()
+
+        return redirect(url_for('main.blogs'))
+
+
     title = 'all blogs'
-    return render_template('blogs.html', title=title)
+    return render_template("blogs.html" ,blogs = blogs , form = form)
+
 
 @main.route('/user/<uname>')
 def profile(uname):
@@ -44,3 +61,4 @@ def update_profile(uname):
         return redirect(url_for('.profile',uname=user.username))
 
     return render_template('update.html',form =form)
+

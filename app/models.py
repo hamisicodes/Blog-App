@@ -41,20 +41,20 @@ class Blog(db.Model):
 
     id = db.Column(db.Integer ,primary_key = True)
     title  = db.Column(db.String(255))
-    description = db.Column(db.String(255), index = True)
+    description = db.Column(db.String(1000005), index = True)
     user_id = db.Column(db.Integer , db.ForeignKey('users.id'))
     comments = db.relationship('Comment' , backref = 'blog', lazy = 'dynamic')
 
 
     def __repr__(self):
-    return f'Blog {self.name}'
+        return f'Blog {self.name}'
 
 
 class Comment(db.Model):
     __tablename__= 'comments'
     id = db.Column(db.Integer,primary_key = True)
     description = db.Column(db.String(255))
-    blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
+    blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
