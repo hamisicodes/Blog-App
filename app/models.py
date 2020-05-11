@@ -59,4 +59,11 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
+class Quote:
+    def __init__(self,author,quote):
+        self.author = author
+        self.quote = quote
+        
+
+
     

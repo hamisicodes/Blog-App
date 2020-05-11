@@ -64,6 +64,7 @@ def update_profile(uname):
     return render_template('update.html',form =form)
 
 @main.route('/comment/<int:id>', methods=["GET", "POST"])
+@login_required
 def comment(id):
     comments = Comment.query.filter_by(blog_id = id)
     blog = Blog.query.filter_by(id=id).first()
