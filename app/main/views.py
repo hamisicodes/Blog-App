@@ -111,5 +111,22 @@ def edit_blog(id):
         form.title.data = blog.title
         form.blog.data = blog.description
 
-    title = "comments"
+    title = "edit"
     return render_template("blog_update.html", blog=blog, form=form)
+
+@main.route("/blog/<int:id>/delete", methods=["GET", "POST"])
+@login_required
+def delete(id):
+
+    blog = Blog.query.filter_by(id=id).first()
+
+    if blog.user != current_user:
+        abort(403)
+
+    db.session.delete(blog)
+    db.session.commit()
+    flash("Blog Deleted", "success")
+
+
+    title = "delete"
+    return redirect(url_for("main.blogs"))
