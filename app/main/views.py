@@ -104,7 +104,7 @@ def edit_blog(id):
         blog.description = form.blog.data
 
         db.session.commit()
-        flash("Post updated", "success")
+        flash("Blog updated", "success")
         return redirect(url_for("main.comment", id=id))
 
     elif request.method == 'GET':
