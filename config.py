@@ -1,3 +1,4 @@
+import os
 class Config:
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://hamisi:hamisi@localhost/blog'
     SECRET_KEY = 'hamisi'
