@@ -13,8 +13,8 @@ Hamisi Ngao
 1. As a writer, I would like to delete comments that I find insulting or degrading.
 1. As a writer, I would like to update or delete blogs I have created.
 
-#SetUp/Installation Requirments
-. python3
-. pip
-. virtualenv
+# SetUp/Installation Requirments
+1. python3
+1. pip
+1. virtualenv
 
