@@ -48,7 +48,7 @@ class Blog(db.Model):
 
 
     def __repr__(self):
-        return f'Blog {self.name}'
+        return f'Blog {self.title}'
 
 
 class Comment(db.Model):
@@ -57,6 +57,9 @@ class Comment(db.Model):
     description = db.Column(db.String(255))
     blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __repr__(self):
+        return f'Comment {self.description}'
 
 
 class Quote:

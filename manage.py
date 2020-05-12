@@ -1,9 +1,10 @@
-from app import create_app,db
+from app import create_app,db,admin
 from flask_script import Manager,Server
-from app.models import User
+from app.models import User,Blog,Comment
 from  flask_migrate import Migrate, MigrateCommand
+from flask_admin.contrib.sqla import ModelView
 
-app = create_app('production')
+app = create_app('development')
 
 manager = Manager(app)
 manager.add_command('server',Server)
@@ -16,4 +17,9 @@ def make_shell_context():
     return dict(app = app,db = db,User = User )
 
 if __name__ == '__main__':
+
+    admin.add_view(ModelView(User,db.session))
+    admin.add_view(ModelView(Blog,db.session))
+    admin.add_view(ModelView(Comment,db.session))
+    
     manager.run()

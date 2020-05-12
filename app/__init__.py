@@ -4,9 +4,17 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 
+
+
+from flask_admin import Admin
+
+
 bootstrap = Bootstrap()
 db = SQLAlchemy()
 login_manager = LoginManager()
+admin = Admin()
+
+
 
 
 login_manager.session_protection = 'strong'
@@ -21,6 +29,9 @@ def create_app(config_name):  # factory function
     db.init_app(app)
     login_manager.init_app(app)
     bootstrap.init_app(app)
+    admin.init_app(app)
+
+    # admin.add_view(ModelView(User,db.session))
 
     # Registering the blueprints
     from .main import main as main_blueprint
