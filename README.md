@@ -18,3 +18,12 @@ Hamisi Ngao
 1. pip
 1. virtualenv
 
+
+# Technologies
+>Python3  Flask
+
+# Developer contact
+>ngaohamisi@gmail.com
+
+# License
+>Copyright (c) 2020 hamisicodes
